@@ -11,7 +11,7 @@ createRoot(document.getElementById("app")).render(
 
 
 
-const shareTask12 = param => {
+/*const shareTask12 = param => {
   task1(param);
   task2(param);
 }
@@ -26,7 +26,7 @@ const doSomething2 = () => {
 }
 
 doSomething1();
-doSomething2();
+doSomething2();*/
 
 
 
