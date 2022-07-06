@@ -1,0 +1,12 @@
+.input-group {
+    margin: 30px;
+}
+.input-group label {
+    margin: 20px;
+}
+.btn-submit {
+    display: block;
+}
+.input-error {
+    color: red;
+}
