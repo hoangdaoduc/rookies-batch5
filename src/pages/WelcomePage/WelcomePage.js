@@ -1,5 +1,5 @@
 import React from 'react';
-import Welcome from '../../components/Welcome/Welcome';
+import Welcome from '../../shared/components/Welcome/Welcome';
 
 const people = [{
   id: "1",

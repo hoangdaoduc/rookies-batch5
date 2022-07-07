@@ -1,5 +1,5 @@
 import React from 'react';
-import Counter from '../../components/Counter/Counter';
+import Counter from '../../shared/components/Counter/Counter';
 
 const CounterPage = () => {
   console.log("Counter page render");

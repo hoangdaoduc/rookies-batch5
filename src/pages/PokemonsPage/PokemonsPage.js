@@ -1,32 +1,13 @@
-import axios from "axios";
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useMemo, useState } from "react"
+import useSendGetApiRequest from '../../shared/hooks/useSendGetApiRequest';
+
 
 const PokemonsPage = () => {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [pokemons, setPokemons] = useState([]);
+  const mapResponseToData = useCallback(response => response.data.results, []);
+  const { loading, data: pokemons, error, setLoading } = useSendGetApiRequest([],
+    "https://pokeapi.co/api/v2/pokemon?offset=100&limit=1000", mapResponseToData)
   const [pokemonTextSeach, setPokemonTextSeach] = useState("");
   const [sortByNameState, setSortByNameState] = useState(null); // "ASC" or "DESC"
-  
-  useEffect(() => {
-    let didCancel = false;
-    axios.get("https://pokeapi.co/api/v2/pokemon?offset=100&limit=1000")
-      .then(response => {
-        if (!didCancel) {
-          setLoading(false);
-          setPokemons(response.data.results)
-        }
-      })
-      .catch(() => {
-        if (!didCancel) {
-          setLoading(false);
-          setError("Something went wrong")
-        }
-      })
-    return () => {
-      didCancel = true;
-    }
-  }, [])
   
   const handleSearchChange = useCallback(evt => {
     setPokemonTextSeach(evt.target.value)
@@ -37,7 +18,7 @@ const PokemonsPage = () => {
       pokemon.name.toLowerCase().includes(pokemonTextSeach.toLowerCase()));
   }, [pokemonTextSeach, pokemons]);
   
-  const pokemonsSorted = useMemo(()=>{
+  const pokemonsSorted = useMemo(() => {
     const getPokemonsSorted = () => {
       if (sortByNameState === null) return pokemonsFiltered;
       if (sortByNameState === "ASC") return pokemonsFiltered.sort((pokemonA, pokemonB) => {

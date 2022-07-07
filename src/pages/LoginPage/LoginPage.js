@@ -1,8 +1,10 @@
 import "./LoginPage.css"
 import { useContext, useState } from "react";
-import { validateEmail, validatePassword } from '../../helpers/validate/validate';
+import { validateEmail, validatePassword } from '../../shared/helpers/validate/validate';
 import { Button, Form } from 'react-bootstrap';
-import LanguageContext from '../../contexts/LanguageContext';
+import LanguageContext from '../../shared/contexts/LanguageContext';
+import axios from 'axios';
+import UserContext from '../../shared/contexts/UserContext';
 
 
 const getText = (language, codeText) => {
@@ -25,6 +27,7 @@ const Loginpage = () => {
     email: "",
     password: ""
   });
+  const { setToken, setUserId } = useContext(UserContext)
   
   const [touched, setTouched] = useState({
     email: false,
@@ -53,6 +56,12 @@ const Loginpage = () => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     console.log("values = ", values);
+    axios.get("https://60dff0ba6b689e001788c858.mockapi.io/token", { data: values})
+      .then(response => {
+        console.log("response = ", response);
+        setToken(response.data.token);
+        setUserId(response.data.userId);
+      })
   }
   
   const formValid = !errorEmail && !errorPassword;
